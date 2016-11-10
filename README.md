@@ -1,2 +1,5 @@
 # stream-features-from-file
-Streams GeoJSON features from a file
+
+Streams GeoJSON features from a file.
+
+**WORK IN PROGRESS!**

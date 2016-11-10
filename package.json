@@ -1,0 +1,38 @@
+{
+  "name": "stream-features-from-file",
+  "version": "0.1.0",
+  "description": "Stream GeoJSON features from a file",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "tape ./test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mapbox/stream-features-from-file.git"
+  },
+  "keywords": [
+    "geojson",
+    "stream",
+    "geospatial",
+    "mapnik"
+  ],
+  "author": "Mapbox",
+  "license": "MIT",
+  "engines": {
+    "node": ">4"
+  },
+  "bugs": {
+    "url": "https://github.com/mapbox/stream-features-from-file/issues"
+  },
+  "homepage": "https://github.com/mapbox/stream-features-from-file#readme",
+  "dependencies": {
+    "mapbox-file-sniff": "^0.5.3",
+    "mapnik": "^3.5.14"
+  },
+  "devDependencies": {
+    "eslint": "^3.9.1",
+    "eslint-config-davidtheclark-node": "^0.2.0",
+    "tape": "^4.6.2"
+  }
+}
