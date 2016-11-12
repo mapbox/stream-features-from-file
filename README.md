@@ -6,3 +6,5 @@ Supports the following source formats:
 - GeoJSON (`FeatureCollection` or `Feature`)
 - CSV
 - Shapefile
+
+Non-GeoJSON formats are read by [Mapnik](http://mapnik.org/documentation/node-mapnik/3.5/).
