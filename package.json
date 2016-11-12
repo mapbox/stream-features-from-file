@@ -5,11 +5,15 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "tape ./test/*.js"
+    "tape": "tape ./test/*.js",
+    "test": "npm run tape && npm run lint"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mapbox/stream-features-from-file.git"
+  },
+  "bin": {
+    "stream-features-from-file": "bin/stream-features-from-file"
   },
   "keywords": [
     "geojson",
@@ -27,12 +31,16 @@
   },
   "homepage": "https://github.com/mapbox/stream-features-from-file#readme",
   "dependencies": {
+    "geojson-stream": "0.0.1",
     "mapbox-file-sniff": "^0.5.3",
-    "mapnik": "^3.5.14"
+    "mapnik": "^3.5.14",
+    "split": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^3.9.1",
     "eslint-config-davidtheclark-node": "^0.2.0",
+    "eslint-plugin-node": "^3.0.3",
+    "geojsonhint": "^2.0.0-beta2",
     "tape": "^4.6.2"
   }
 }

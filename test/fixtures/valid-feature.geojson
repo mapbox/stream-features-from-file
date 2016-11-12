@@ -1,0 +1,9 @@
+{
+  "type": "Feature",
+  "id": "bananaOne",
+  "properties": { "banana": "one" },
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [[0, 0], [1, 1]]
+  }
+}

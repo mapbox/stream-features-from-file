@@ -2,4 +2,7 @@
 
 Streams GeoJSON features from a file.
 
-**WORK IN PROGRESS!**
+Supports the following source formats:
+- GeoJSON (`FeatureCollection` or `Feature`)
+- CSV
+- Shapefile
