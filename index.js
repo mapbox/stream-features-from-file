@@ -23,7 +23,13 @@ const streamFeaturesFromFile = (filePath) => {
       if (fileType === 'geojson') {
         return streamFromGeojson(featureStream, filePath);
       }
-      return streamFromMapnik(featureStream, filePath, fileType);
+      if (
+        fileType === 'csv'
+        || fileType === 'shp'
+      ) {
+        return streamFromMapnik(featureStream, filePath, fileType);
+      }
+      throw new Error(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp`);
     })
     .catch((err) => featureStream.emit('error', err));
 

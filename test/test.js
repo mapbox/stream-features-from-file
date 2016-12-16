@@ -102,7 +102,7 @@ test('valid CSV', (assert) => {
 });
 
 test('valid Shapefile', (assert) => {
-  const fixturePath = getFixturePath('ports/ports.shp');
+  const fixturePath = getFixturePath('valid-shp/valid-shp.shp');
 
   let featureCount = 0;
   let invalid = false;
