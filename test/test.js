@@ -3,7 +3,7 @@
 const test = require('tape');
 const path = require('path');
 const fs = require('fs');
-const geojsonhint = require('geojsonhint');
+const geojsonhint = require('@mapbox/geojsonhint');
 const streamFeaturesFromFile = require('..');
 
 const getFixturePath = (fileName) => path.join(__dirname, 'fixtures', fileName);

@@ -31,16 +31,16 @@
   },
   "homepage": "https://github.com/mapbox/stream-features-from-file#readme",
   "dependencies": {
-    "geojson-stream": "0.0.1",
+    "binary-split": "^1.0.3",
+    "geojson-stream": "^0.0.1",
     "mapbox-file-sniff": "^0.5.3",
-    "mapnik": "^3.5.14",
-    "split": "^1.0.0"
+    "mapnik": "^3.5.14"
   },
   "devDependencies": {
+    "@mapbox/geojsonhint": "^1.2.1",
     "eslint": "^3.9.1",
-    "eslint-config-davidtheclark-node": "^0.2.0",
+    "eslint-config-davidtheclark-node": "^0.2.1",
     "eslint-plugin-node": "^3.0.3",
-    "geojsonhint": "^2.0.0-beta2",
     "tape": "^4.6.2"
   }
 }
