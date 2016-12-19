@@ -8,3 +8,11 @@ Supports the following source formats:
 - Shapefile
 
 Non-GeoJSON formats are read by [Mapnik](http://mapnik.org/documentation/node-mapnik/3.5/).
+
+## Usage
+
+```
+const featureStream = streamFeaturesFromFile(filePath);
+```
+
+`streamFeaturesFromFile` accepts a `filePath` argument and returns a readable object-mode stream of GeoJSON features derived from the provided file.
