@@ -1,0 +1,32 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "fooBar",
+      "properties": { "foo": "bar" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [0, 0]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "barBaz",
+      "properties": { "bar": "baz" },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1, 1
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "bananaOne",
+      "properties": { "banana": "one" },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[0, 0], [1, 1]]
+      }
+    }
+  ]
+}

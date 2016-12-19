@@ -8,6 +8,17 @@ const streamFeaturesFromFile = require('..');
 
 const getFixturePath = (fileName) => path.join(__dirname, 'fixtures', fileName);
 
+test('missing file', (assert) => {
+  const fixturePath = getFixturePath('i/do/not/exist.geojson');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('ENOENT') === 0, 'expected error');
+      assert.end();
+    })
+    .on('end', assert.end);
+});
+
 test('valid GeoJSON FeatureCollection', (assert) => {
   const fixturePath = getFixturePath('valid-feature-collection.geojson');
   const fixtureContent = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
@@ -31,22 +42,27 @@ test('valid GeoJSON FeatureCollection', (assert) => {
     .on('error', assert.end);
 });
 
-test('valid GeoJSON Feature', (assert) => {
-  const fixturePath = getFixturePath('valid-feature.geojson');
-  const fixtureContent = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
+test('invalid GeoJSON: bad JSON', (assert) => {
+  const fixturePath = getFixturePath('invalid-bad-json.geojson');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('Invalid JSON') === 0, 'expected error');
+      assert.end();
+    })
+    .on('end', assert.end);
+});
+
+test('invalid GeoJSON: Feature, not FeatureCollection', (assert) => {
+  const fixturePath = getFixturePath('invalid-feature.geojson');
 
   let featureCount = 0;
-  let invalid = false;
   streamFeaturesFromFile(fixturePath)
-    .on('data', (feature) => {
+    .on('data', () => {
       featureCount += 1;
-      if (geojsonhint.hint(feature).length > 0) invalid = true;
-      assert.equal(geojsonhint.hint(feature).length, 0, 'feature is valid');
-      assert.deepEqual(feature, fixtureContent, 'feature matches original');
     })
     .on('end', () => {
-      assert.equal(invalid, false, 'valid GeoJSON');
-      assert.equal(featureCount, 1, 'expected feature count');
+      assert.equal(featureCount, 0, 'no features streamed');
       assert.end();
     })
     .on('error', assert.end);
@@ -101,6 +117,48 @@ test('valid CSV', (assert) => {
     .on('error', assert.end);
 });
 
+test('invalid CSV: one bad feature', (assert) => {
+  const fixturePath = getFixturePath('invalid-features.csv');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('Failed to parse Latitude') === 0, 'expected error');
+      assert.end();
+    })
+    .on('end', () => {
+      assert.fail('should have errored');
+      assert.end();
+    });
+});
+
+test('invalid CSV: no lng, lat columns', (assert) => {
+  const fixturePath = getFixturePath('invalid-not-geo.csv');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('Unable to parse file') === 0, 'expected error');
+      assert.end();
+    })
+    .on('end', () => {
+      assert.fail('should have errored');
+      assert.end();
+    });
+});
+
+test('invalid CSV: malformed', (assert) => {
+  const fixturePath = getFixturePath('invalid-format.csv');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('CSV Plugin') === 0, 'expected error');
+      assert.end();
+    })
+    .on('end', () => {
+      assert.fail('should have errored');
+      assert.end();
+    });
+});
+
 test('valid Shapefile', (assert) => {
   const fixturePath = getFixturePath('valid-shp/valid-shp.shp');
 
@@ -117,4 +175,26 @@ test('valid Shapefile', (assert) => {
       assert.end();
     })
     .on('error', assert.end);
+});
+
+test('invalid Shapefile: missing peer files', (assert) => {
+  const fixturePath = getFixturePath('invalid-missing-files-shp/invalid-missing-files-shp.shp');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('Shape Plugin') === 0, 'expected error');
+      assert.end();
+    })
+    .on('end', assert.end);
+});
+
+test('invalid Shapefile: corrupted', (assert) => {
+  const fixturePath = getFixturePath('invalid-corrupted-shp/invalid-corrupted-shp.shp');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('Shape Plugin') === 0, 'expected error');
+      assert.end();
+    })
+    .on('end', assert.end);
 });
