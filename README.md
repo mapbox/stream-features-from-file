@@ -11,7 +11,7 @@ Non-GeoJSON formats are read by [Mapnik](http://mapnik.org/documentation/node-ma
 
 ## Usage
 
-```
+```js
 const featureStream = streamFeaturesFromFile(filePath);
 ```
 
