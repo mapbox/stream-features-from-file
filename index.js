@@ -32,7 +32,7 @@ const streamFeaturesFromFile = (filePath) => {
       }
       throw invalid(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp`); // TODO: Cleanse filepath
     })
-    .catch((err) => featureStream.emit('error', err));
+    .catch((err) => featureStream.emit('error', invalid(err.message)));
 
   return featureStream;
 };
