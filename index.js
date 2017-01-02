@@ -30,7 +30,7 @@ const streamFeaturesFromFile = (filePath) => {
       ) {
         return streamFromMapnik(featureStream, filePath, fileType);
       }
-      throw invalid(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp`); // TODO: Cleanse filepath
+      throw invalid(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp`);
     })
     .catch((err) => featureStream.emit('error', invalid(err.message)));
 
