@@ -14,7 +14,6 @@ test('missing file', (assert) => {
     .on('error', (err) => {
       assert.ok(err, 'errored');
       assert.ok(err.message.indexOf('ENOENT') === 0, 'expected error');
-      assert.equals(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })
     .on('end', assert.end);
