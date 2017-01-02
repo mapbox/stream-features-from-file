@@ -4,6 +4,7 @@ const stream = require('stream');
 const getFileType = require('./lib/getFileType');
 const streamFromMapnik = require('./lib/streamFromMapnik');
 const streamFromGeojson = require('./lib/streamFromGeojson');
+const invalid = require('./lib/invalid');
 
 /**
  * Returns a readable object-mode stream of GeoJSON features
@@ -29,7 +30,7 @@ const streamFeaturesFromFile = (filePath) => {
       ) {
         return streamFromMapnik(featureStream, filePath, fileType);
       }
-      throw new Error(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp`);
+      throw invalid(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp`);
     })
     .catch((err) => featureStream.emit('error', err));
 

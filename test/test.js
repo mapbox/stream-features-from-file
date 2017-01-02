@@ -19,6 +19,18 @@ test('missing file', (assert) => {
     .on('end', assert.end);
 });
 
+test('invalid filetype', (assert) => {
+  const fixturePath = getFixturePath('invalid-filetype.tif');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.equals(err.message, 'Unknown file type "tif": accepts .geojson, .csv, or .shp', 'expected error message');
+      assert.equals(err.code, 'EINVALID', 'expected error code');
+      assert.end();
+    })
+    .on('end', assert.end);
+});
+
 test('valid GeoJSON FeatureCollection', (assert) => {
   const fixturePath = getFixturePath('valid-feature-collection.geojson');
   const fixtureContent = JSON.parse(fs.readFileSync(fixturePath, 'utf8'));
@@ -47,7 +59,8 @@ test('invalid GeoJSON: bad JSON', (assert) => {
   streamFeaturesFromFile(fixturePath)
     .on('error', (err) => {
       assert.ok(err, 'errored');
-      assert.ok(err.message.indexOf('Invalid JSON') === 0, 'expected error');
+      assert.ok(err.message.indexOf('Invalid JSON') !== -1, 'expected error');
+      assert.equal(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })
     .on('end', assert.end);
@@ -123,6 +136,7 @@ test('invalid CSV: one bad feature', (assert) => {
     .on('error', (err) => {
       assert.ok(err, 'errored');
       assert.ok(err.message.indexOf('Failed to parse Latitude') === 0, 'expected error');
+      assert.equal(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })
     .on('end', () => {
@@ -136,7 +150,8 @@ test('invalid CSV: no lng, lat columns', (assert) => {
   streamFeaturesFromFile(fixturePath)
     .on('error', (err) => {
       assert.ok(err, 'errored');
-      assert.ok(err.message.indexOf('Unable to parse file') === 0, 'expected error');
+      assert.ok(err.message.indexOf('Unable to parse file') !== -1, 'expected error');
+      assert.equal(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })
     .on('end', () => {
@@ -151,6 +166,7 @@ test('invalid CSV: malformed', (assert) => {
     .on('error', (err) => {
       assert.ok(err, 'errored');
       assert.ok(err.message.indexOf('CSV Plugin') === 0, 'expected error');
+      assert.equals(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })
     .on('end', () => {
@@ -183,6 +199,7 @@ test('invalid Shapefile: missing peer files', (assert) => {
     .on('error', (err) => {
       assert.ok(err, 'errored');
       assert.ok(err.message.indexOf('Shape Plugin') === 0, 'expected error');
+      assert.equals(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })
     .on('end', assert.end);
@@ -194,6 +211,7 @@ test('invalid Shapefile: corrupted', (assert) => {
     .on('error', (err) => {
       assert.ok(err, 'errored');
       assert.ok(err.message.indexOf('Shape Plugin') === 0, 'expected error');
+      assert.equals(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })
     .on('end', assert.end);
