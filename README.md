@@ -1,5 +1,7 @@
 # stream-features-from-file
 
+[![Build Status](https://travis-ci.org/mapbox/stream-features-from-file.svg?branch=master)](https://travis-ci.org/mapbox/stream-features-from-file)
+
 Streams GeoJSON features from a file.
 
 Supports the following source formats:
