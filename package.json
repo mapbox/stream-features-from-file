@@ -1,5 +1,5 @@
 {
-  "name": "stream-features-from-file",
+  "name": "@mapbox/stream-features-from-file",
   "version": "0.1.0",
   "description": "Stream GeoJSON features from a file",
   "main": "index.js",
