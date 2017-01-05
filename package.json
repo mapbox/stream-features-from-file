@@ -34,7 +34,8 @@
     "binary-split": "^1.0.3",
     "geojson-stream": "^0.0.1",
     "mapbox-file-sniff": "^0.5.3",
-    "mapnik": "^3.5.14"
+    "mapnik": "^3.5.14",
+    "shapefile-fairy": "0.3.4"
   },
   "devDependencies": {
     "@mapbox/geojsonhint": "^1.2.1",

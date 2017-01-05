@@ -24,7 +24,7 @@ test('invalid filetype', (assert) => {
   streamFeaturesFromFile(fixturePath)
     .on('error', (err) => {
       assert.ok(err, 'errored');
-      assert.equals(err.message, 'Unknown file type "tif": accepts .geojson, .csv, or .shp', 'expected error message');
+      assert.equals(err.message, 'Unknown file type "tif": accepts .geojson, .csv, or .shp (zipped and unzipped)', 'expected error message');
       assert.equals(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })
@@ -215,4 +215,22 @@ test('invalid Shapefile: corrupted', (assert) => {
       assert.end();
     })
     .on('end', assert.end);
+});
+
+test('valid zipped Shapefile', (assert) => {
+  const fixturePath = getFixturePath('valid-shp.zip');
+
+  let featureCount = 0;
+  let invalid = false;
+  streamFeaturesFromFile(fixturePath)
+    .on('data', (feature) => {
+      featureCount += 1;
+      if (geojsonhint.hint(feature).length > 0) invalid = true;
+    })
+    .on('end', () => {
+      assert.equal(invalid, false, 'valid GeoJSON');
+      assert.equal(featureCount, 699, 'expected feature count');
+      assert.end();
+    })
+    .on('error', assert.end);
 });
