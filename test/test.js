@@ -24,7 +24,7 @@ test('invalid filetype', (assert) => {
   streamFeaturesFromFile(fixturePath)
     .on('error', (err) => {
       assert.ok(err, 'errored');
-      assert.equals(err.message, 'Unknown file type "tif": accepts .geojson, .csv, or .shp (zipped and unzipped)', 'expected error message');
+      assert.equals(err.message, 'Unknown file type "tif": accepts .geojson, .csv, or .shp (zipped or unzipped)', 'expected error message');
       assert.equals(err.code, 'EINVALID', 'expected error code');
       assert.end();
     })

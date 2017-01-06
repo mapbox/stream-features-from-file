@@ -38,7 +38,7 @@ const streamFeaturesFromFile = (filePath) => {
       if (fileType === 'zip') {
         return streamFromZip(featureStream, filePath);
       }
-      throw invalid(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp (zipped and unzipped)`);
+      throw invalid(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp (zipped or unzipped)`);
     })
     .catch((err) => handleError(err));
 
