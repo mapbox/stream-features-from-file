@@ -234,3 +234,15 @@ test('valid zipped Shapefile', (assert) => {
     })
     .on('error', assert.end);
 });
+
+test('invalid zipfile: corrupted', (assert) => {
+  const fixturePath = getFixturePath('invalid-zip');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('Invalid zipfile') === 0, 'expected error');
+      assert.equals(err.code, 'EINVALID', 'expected error code');
+      assert.end();
+    })
+    .on('end', assert.end);
+});
