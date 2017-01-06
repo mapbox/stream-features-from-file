@@ -4,7 +4,7 @@ const stream = require('stream');
 const getFileType = require('./lib/getFileType');
 const streamFromMapnik = require('./lib/streamFromMapnik');
 const streamFromGeojson = require('./lib/streamFromGeojson');
-const shpFairy = require('shapefile-fairy');
+const streamFromZip = require('./lib/streamFromZip');
 const invalid = require('./lib/invalid');
 
 /**
@@ -36,17 +36,11 @@ const streamFeaturesFromFile = (filePath) => {
         return streamFromMapnik(featureStream, filePath, fileType);
       }
       if (fileType === 'zip') {
-        shpFairy(filePath, (err, shpFile) => {
-          if (err && err.code === 'EINVALID') {
-            return handleError(invalid('Invalid zipfile: ' + err.message));
-          }
-          if (err) return handleError(err);
-          return streamFromMapnik(featureStream, shpFile, 'shp');
-        });
+        return streamFromZip(featureStream, filePath);
       }
-      else return handleError(invalid(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp (zipped and unzipped)`));
+      throw invalid(`Unknown file type "${fileType}": accepts .geojson, .csv, or .shp (zipped and unzipped)`);
     })
-    .catch((err) => featureStream.emit('error', err));
+    .catch((err) => handleError(err));
 
   return featureStream;
 };
