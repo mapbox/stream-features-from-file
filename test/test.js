@@ -246,3 +246,15 @@ test('invalid zipfile: corrupted', (assert) => {
     })
     .on('end', assert.end);
 });
+
+test('invalid zipped shapefile: error returns via streamFromMapnik', (assert) => {
+  const fixturePath = getFixturePath('invalid-corrupted-shp.zip');
+  streamFeaturesFromFile(fixturePath)
+    .on('error', (err) => {
+      assert.ok(err, 'errored');
+      assert.ok(err.message.indexOf('Shape Plugin') === 0, 'expected error');
+      assert.equals(err.code, 'EINVALID', 'expected error code');
+      assert.end();
+    })
+    .on('end', assert.end);
+});
