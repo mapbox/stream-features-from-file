@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@mapbox/geojsonhint": "^1.2.1",
-    "eslint": "^3.9.1",
+    "eslint": "^4.18.2",
     "eslint-config-davidtheclark-node": "^0.2.1",
     "eslint-plugin-node": "^3.0.3",
     "tape": "^4.6.2"
